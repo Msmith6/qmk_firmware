@@ -20,8 +20,9 @@ extern uint8_t is_master;
 #define _LOWER 1
 #define _RAISE 2
 #define _TXTEDIT 3
-#define _ADJUST 4
-#define _GAME 5
+#define _FN 4
+#define _ADJUST 5
+#define _GAME 6
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -29,6 +30,7 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   TXTEDIT,
+  FN,
   GAME,
   BACKLIT,
   RGBRST,
@@ -57,51 +59,63 @@ enum macro_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT( \
-  //,-------------------------------------------------------.                    ,----------------------------------------------------.
-       KC_ESC,        KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,                       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSPC,\
-  //|---------------+-----+--------+--------+--------+------|                    |------+--------+--------+--------+--------+--------|
-      LCTL_T(KC_TAB), KC_A,    KC_S,    KC_D,    KC_F,  KC_G,                       KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,\
-  //|---------------+-----+--------+--------+--------+------|                    |------+--------+--------+--------+--------+--------|
-      KC_LALT,        KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,                       KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_ENT,\
-  //|---------------+-----+--------+--------+--------+------+--------|  |--------+------+--------+--------+--------+--------+--------|
-                                              KC_LGUI, LOWER, KC_LSFT,     KC_SPC, RAISE, TXTEDIT \
-                                          //`------------------------'  `------------------------'
+  //,--------------------------------------------------.                    ,-------------------------------------------------------.
+      XXXXXXX,         KC_Q,  KC_W,  KC_E,  KC_R,  KC_T,                      KC_Y,  KC_U,    KC_I,   KC_O,            KC_P, XXXXXXX,\
+  //|--------+-------------+------+------+------+------|                    |-----+------+--------+-------+----------------+--------|
+      XXXXXXX, LCTL_T(KC_A),  KC_S,  KC_D,  KC_F,  KC_G,                      KC_H,  KC_J,    KC_K,   KC_L, RCTL_T(KC_SCLN), XXXXXXX,\
+  //|--------+-------------+------+------+------+------|                    |-----+------+--------+-------+----------------+--------|
+      XXXXXXX,        KC_Z,   KC_X,  KC_C,  KC_V,  KC_B,                      KC_N,  KC_M, KC_COMM, KC_DOT,         KC_SLSH, XXXXXXX,\
+  //|--------+-------------+------+------+------+------+--------|  |--------+-----+------+--------+-------+----------------+--------|
+                                              FN, LOWER, KC_LSFT,    KC_SPC, RAISE, TXTEDIT \
+                                    //`-------------------------'  `------------------------'
 
   ),
 
   [_LOWER] = LAYOUT( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_GRV,    KC_F9,  KC_F10,  KC_F11,  KC_F12, XXXXXXX,                      XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP,  KC_END, KC_DELETE,\
+      XXXXXXX,  KC_ESC, XXXXXXX, KC_LGUI, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP,  KC_END, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,   KC_F5,   KC_F6,   KC_F7,   KC_F8, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX,\
+      XXXXXXX, KC_LCTL, KC_LALT, XXXXXXX,  KC_TAB, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_BSPC,  KC_DEL, XXXXXXX,  KC_ENT, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,   LOWER, KC_LSFT,     KC_SPC,   RAISE, XXXXXXX \
+                                               FN,   LOWER, KC_LSFT,     KC_SPC,   RAISE, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
-    ),
+  ),
 
   [_RAISE] = LAYOUT( \
   //,-----------------------------------------------------.                    ,------------------------------------------------------.
-      XXXXXXX, XXXXXXX,    KC_7,    KC_8,    KC_9, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN,KC_BSLASH, KC_BSPC,\
+      XXXXXXX, XXXXXXX,    KC_7,    KC_8,    KC_9, XXXXXXX,                       KC_GRV, KC_QUOT, KC_LPRN, KC_RPRN,KC_BSLASH, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+---------+--------|
-      XXXXXXX,    KC_0,    KC_4,    KC_5,    KC_6, XXXXXXX,                      XXXXXXX, KC_MINS,  KC_EQL, KC_LBRC,  KC_RBRC, KC_BSLS,\
+      XXXXXXX,    KC_0,    KC_4,    KC_5,    KC_6, XXXXXXX,                      XXXXXXX, KC_MINS,  KC_EQL, KC_LBRC,  KC_RBRC, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+---------+--------|
-      XXXXXXX, XXXXXXX,    KC_1,    KC_2,    KC_3, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX,  KC_DOT, XXXXXXX, XXXXXXX,\
+      XXXXXXX, XXXXXXX,    KC_1,    KC_2,    KC_3, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX,  KC_DOT,  KC_SLSH, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+---------+--------|
-                                          KC_LGUI,   LOWER, KC_LSFT,     KC_SPC,   RAISE, XXXXXXX \
+                                               FN,   LOWER, KC_LSFT,     KC_SPC,   RAISE, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
   ),
 
   [_TXTEDIT] = LAYOUT( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX,COL_BLCK,CPY_DOWN, CPY_UP, EXP_BLCK, XXXXXXX,                      XXXXXXX,HLW_LEFT, HL_PGDN, HL_PGUP,HLW_RGHT,DEL_LINE,\
+      XXXXXXX,COL_BLCK,CPY_DOWN, CPY_UP, EXP_BLCK, XXXXXXX,                      XXXXXXX,HLW_LEFT, HL_PGDN, HL_PGUP,HLW_RGHT, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, MV_LEFT, MV_DOWN,   MV_UP, MV_RGHT, XXXXXXX,                      XXXXXXX, HL_LEFT, HL_DOWN,   HL_UP, HL_RGHT, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,DEL_LINE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, XXXXXXX, KC_LSFT,    KC_SPC, XXXXXXX, TXTEDIT \
+                                               FN, XXXXXXX, KC_LSFT,    KC_SPC, XXXXXXX, TXTEDIT \
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [_FN] = LAYOUT( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      XXXXXXX,   KC_F9,  KC_F10,  KC_F11,  KC_F12, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX,   KC_F5,   KC_F6,   KC_F7,   KC_F8, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, KC_RALT, KC_RCTL, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                               FN, XXXXXXX, KC_LSFT,     KC_SPC, XXXXXXX, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -113,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+----------|
       RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+----------|
-                                          KC_LGUI,   LOWER, KC_LSFT,     KC_SPC,   RAISE, XXXXXXX \
+                                               FN,   LOWER, KC_LSFT,     KC_SPC,   RAISE, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -212,6 +226,10 @@ void render_layer_state(void) {
       oled_write_P(text_edit_layer, false);
   } else if(layer_state_is(_QWERTY)) {
       oled_write_P(default_layer, false);
+  } else if(layer_state_is(_FN)) {
+      render_space();
+      oled_write_P(PSTR("  FN "), false);
+      render_space();
   } else {
       oled_write_P(PSTR("UNDEF"), false);
   }
@@ -289,6 +307,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_TXTEDIT);
       } else {
         layer_off(_TXTEDIT);
+      }
+      break;
+    case FN:
+      if(record ->event.pressed) {
+        layer_on(_FN);
+      } else {
+        layer_off(_FN);
       }
       break;
     case ADJUST:
