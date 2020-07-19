@@ -123,23 +123,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-------------------------------------------------------.
         RESET,  RGBRST, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+----------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX,    GAME, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX,\
+      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+----------|
       RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+----------|
-                                               FN,   LOWER, KC_LSFT,     KC_SPC,   RAISE, XXXXXXX \
+                                               FN,   LOWER, KC_LSFT,     KC_SPC,   RAISE,   GAME \
                                       //`--------------------------'  `--------------------------'
   ),
 
   [_GAME] = LAYOUT( \
-  //,------------------------------------------------------.                    ,------------------------------------------------------------.
-         KC_4,    KC_3,    KC_Q,    KC_W,    KC_E,     KC_R,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RALT(KC_F10),\
-  //|--------+--------+--------+--------+--------+---------|                    |--------+--------+--------+--------+--------+--------------|
-         KC_2,    KC_1,    KC_A,    KC_S,    KC_D,     KC_F,                      XXXXXXX,    GAME, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX,\
-  //|--------+--------+--------+--------+--------+---------|                    |--------+--------+--------+--------+--------+--------------|
-         KC_6,    KC_5,    KC_Z,    KC_X,    KC_C,     KC_V,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  RALT(KC_F9),\
-  //|--------+--------+--------+--------+--------+---------+--------|  |--------+--------+--------+--------+--------+--------+--------------|
-                                             KC_TAB, KC_LSFT, KC_SPC,    XXXXXXX, XXXXXXX, QWERTY \
+  //,------------------------------------------------------.                    ,----------------------------------------------------------------.
+      XXXXXXX,    KC_6,    KC_1,    KC_W,    KC_2,     KC_3,                      KC_PSCR, XXXXXXX, XXXXXXX, RALT(KC_F9), RALT(KC_F10), XXXXXXX,\
+  //|--------+--------+--------+--------+--------+---------|                    |--------+--------+--------+------------+-------------+---------|
+      XXXXXXX, KC_LSFT,    KC_A,    KC_S,    KC_D,     KC_4,                      XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,      XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+---------|                    |--------+--------+--------+------------+-------------+---------|
+      XXXXXXX,    KC_7,    KC_Z,    KC_X,    KC_C,     KC_5,                      XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,      XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+---------+--------|  |--------+--------+--------+--------+------------+-------------+---------|
+                                           KC_ESC,   KC_TAB,  KC_SPC,    XXXXXXX, QWERTY, GAME \
                                          //`------------------------'  `------------------------'
 
   )
@@ -256,6 +256,10 @@ void oled_task_user(void) {
     oled_off();
     return;
   }
+#ifndef SPLIT_KEYBOARD
+  else { oled_on(); }
+#endif
+
   if(is_keyboard_master()) {
     render_status_main();
   } else {
