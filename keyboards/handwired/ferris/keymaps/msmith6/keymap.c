@@ -4,16 +4,14 @@
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
-#define _TXTEDIT 3
-#define _FN 4
-#define _GAME 5
+#define _MISC 3
+#define _GAME 4
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
-  TXTEDIT,
-  FN,
+  MISC,
   GAME
 };
 
@@ -29,14 +27,6 @@ enum custom_keycodes {
 #define MV_UP LALT(KC_UP) // move up (VS Code)
 #define MV_DOWN LALT(KC_DOWN) // move down (VS Code)
 #define DEL_LINE LCTL(LSFT(KC_K)) // delete line (VS Code)
-#define HLW_LEFT LCTL(LSFT(KC_LEFT)) // highlight word left
-#define HLW_RGHT LCTL(LSFT(KC_RGHT)) // highlight word right
-#define HL_LEFT LSFT(KC_LEFT) // highlight left
-#define HL_RGHT LSFT(KC_RGHT) // highlight right
-#define HL_UP LSFT(KC_UP) // highlight up
-#define HL_DOWN LSFT(KC_DOWN) // highlight down,
-#define HL_PGUP LSFT(KC_PGUP) // highlight page up
-#define HL_PGDN LSFT(KC_PGDN) // highlight page down
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -49,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------------+-------------+------+------+------|                          |------+---------+--------+-------+----------------|
              KC_Z,         KC_X,  KC_C,  KC_V,  KC_B,                             KC_N,     KC_M, KC_COMM, KC_DOT,         KC_SLSH,\
   //|------------+-------------+------+------+------+--------|  |--------------+------+---------+--------+-------+----------------|
-                                               LOWER, TXTEDIT,   LSFT_T(KC_SPC), RAISE \
+                                               LOWER,    MISC,   LSFT_T(KC_SPC), RAISE \
                                         //`------------------'  `---------------------'
 
   ),
@@ -78,27 +68,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                     //`------------------'  `----------------'
   ),
 
-  [_TXTEDIT] = LAYOUT( \
-  //,--------------------------------------------.                    ,--------------------------------------------.
-     COL_BLCK,CPY_DOWN, CPY_UP, EXP_BLCK, XXXXXXX,                      XXXXXXX,HLW_LEFT, HL_PGDN, HL_PGUP,HLW_RGHT,\
-  //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      MV_LEFT, MV_DOWN,   MV_UP, MV_RGHT, XXXXXXX,                      XXXXXXX, HL_LEFT, HL_DOWN,   HL_UP, HL_RGHT,\
-  //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,DEL_LINE, XXXXXXX, XXXXXXX, XXXXXXX,\
-  //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, TXTEDIT,     KC_SPC, XXXXXXX \
-                                     //`------------------'  `-----------------'
-  ),
-
-  [_FN] = LAYOUT( \
+  [_MISC] = LAYOUT( \
   //,-----------------------------------------.                    ,--------------------------------------------.
-     KC_F9,  KC_F10,  KC_F11,  KC_F12, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+     KC_F9,  KC_F10,  KC_F11,  KC_F12, XXXXXXX,                      XXXXXXX,COL_BLCK,CPY_DOWN,  CPY_UP,EXP_BLCK,\
   //|-----+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-     KC_F5,   KC_F6,   KC_F7,   KC_F8, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, KC_RALT, KC_RCTL,\
+     KC_F5,   KC_F6,   KC_F7,   KC_F8, XXXXXXX,                      XXXXXXX, MV_LEFT, MV_DOWN,   MV_UP, MV_RGHT,\
   //|-----+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-     KC_F1,   KC_F2,   KC_F3,   KC_F4, XXXXXXX,                         GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+     KC_F1,   KC_F2,   KC_F3,   KC_F4, XXXXXXX,                         GAME,DEL_LINE, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|-----+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                       XXXXXXX, KC_LSFT,     KC_SPC, XXXXXXX \
+                                       XXXXXXX,    MISC,    KC_RALT, KC_RCTL \
                                   //`------------------'  `-----------------'
   ),
 
@@ -134,33 +112,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _FN);
       } else {
         layer_off(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _FN);
       }
       return false;
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _FN);
       } else {
         layer_off(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _FN);
       }
       return false;
-    case TXTEDIT:
+    case MISC:
       if(record ->event.pressed) {
-        layer_on(_TXTEDIT);
+        layer_on(_MISC);
       } else {
-        layer_off(_TXTEDIT);
-      }
-      return false;
-    case FN:
-      if(record ->event.pressed) {
-        layer_on(_FN);
-      } else {
-        layer_off(_FN);
+        layer_off(_MISC);
       }
       return false;
   }
