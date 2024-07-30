@@ -12,7 +12,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GRV, KC_EXLM, KC_UP, LCTL(KC_E), KC_DLR, KC_PERC, KC_CIRC, KC_LCBR, KC_RCBR, KC_AMPR, KC_HASH, KC_UNDS, \
         QSE, KC_LEFT, KC_DOWN, KC_DEL, KC_RIGHT, KC_SPC, KC_BSPC, KC_LPRN, KC_RPRN, KC_EQL, KC_COLN, KC_DQUO, \
         KC_PIPE, ASDF1, KC_AT, KC_ASTR, KC_MINUS, KC_TILD, KC_PLUS, KC_LBRC, KC_RBRC, KC_LT, KC_GT, KC_QUES, KC_BSLS,\
-        _______, _______, _______, _______, _______, _______, RESET \
+        _______, _______, _______, _______, _______, _______, QK_BOOT \
     ),
 
     [2] = LAYOUT_all(
