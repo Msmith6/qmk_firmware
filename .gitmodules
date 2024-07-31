@@ -25,3 +25,6 @@
 	path = lib/lvgl
 	url = https://github.com/qmk/lvgl.git
 	branch = release/v8.2
+[submodule "users/msmith6"]
+	path = users/msmith6
+	url = git@github.com:Msmith6/qmk_userspace.git
